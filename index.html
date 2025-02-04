@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sahlan Hasan - Portfolio & Social Hub</title>
+    <title>Sahlan Hasan - Portfolio & Community</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --bg-color: #1a1a1a;
@@ -38,6 +39,7 @@
             padding: 40px 20px;
         }
 
+        /* Profile Section */
         .profile-img {
             width: 150px;
             height: 150px;
@@ -59,6 +61,7 @@
             margin-bottom: 10px;
         }
 
+        /* Sections */
         .section {
             background: var(--card-bg);
             padding: 20px;
@@ -73,6 +76,7 @@
             margin-bottom: 20px;
         }
 
+        /* Community Feed Styles */
         .create-post {
             background: var(--card-bg);
             padding: 20px;
@@ -88,6 +92,7 @@
             border-radius: 5px;
             background: var(--bg-color);
             color: var(--text-color);
+            resize: none;
         }
 
         .post {
@@ -95,6 +100,7 @@
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 20px;
+            position: relative;
         }
 
         .post img {
@@ -109,45 +115,39 @@
             margin-top: 15px;
         }
 
-        .like-button {
+        .like-btn {
+            background: none;
+            border: none;
             cursor: pointer;
             color: var(--accent-color);
-            font-size: 1.5rem;
+            padding: 5px 10px;
+            border-radius: 5px;
         }
 
-        .liked {
-            color: red; /* Heart turns red when liked */
-        }
-
-        .delete-button {
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
             cursor: pointer;
-            color: #ff4747;
-            font-size: 1rem;
-            margin-left: auto;
-            text-decoration: underline;
         }
 
-        .comments-section {
-            margin-top: 15px;
-            border-top: 1px solid var(--border-color);
-            padding-top: 15px;
-        }
-
-        .comment-input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid var(--border-color);
+        button {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 10px 20px;
             border-radius: 5px;
-            background: var(--bg-color);
-            color: var(--text-color);
+            cursor: pointer;
+            transition: opacity 0.3s;
         }
 
-        .comment {
-            background: var(--bg-color);
-            padding: 10px;
-            border-radius: 5px;
-            margin: 5px 0;
+        button:hover {
+            opacity: 0.8;
         }
 
         /* Theme Toggle */
@@ -165,12 +165,12 @@
 
         /* Responsive Design */
         @media screen and (max-width: 600px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-            
             .container {
                 padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
             }
         }
     </style>
@@ -184,17 +184,11 @@
              alt="Sahlan Hasan" 
              class="profile-img">
         <h1>Sahlan Hasan</h1>
-        <p style="text-align: center; color: var(--accent-color);">
-            Tech Professional | Developer | Innovator
-        </p>
-
-        <!-- About Me -->
         <div class="section">
             <h2>About Me</h2>
-            <p>A passionate tech professional with expertise in modern web development and entrepreneurship.</p>
+            <p>Hi, I'm Sahlan Hasan. A passionate tech professional with expertise in modern web development and entrepreneurship.</p>
         </div>
 
-        <!-- Skills -->
         <div class="section">
             <h2>Skills</h2>
             <ul>
@@ -204,7 +198,6 @@
             </ul>
         </div>
 
-        <!-- Projects -->
         <div class="section">
             <h2>Projects</h2>
             <div class="project">
@@ -217,15 +210,15 @@
             </div>
         </div>
 
-        <!-- Social Feed Section -->
+        <!-- Community Feed Section -->
         <div class="section">
             <h2>Community Feed</h2>
             <div class="create-post">
-                <textarea id="post-text" placeholder="What's on your mind?"></textarea>
-                <input type="file" id="post-image" accept="image/*">
-                <button id="post-button">Post</button>
+                <textarea id="post-text" placeholder="Share your thoughts..."></textarea>
+                <input type="file" id="image-upload" accept="image/*">
+                <button id="post-btn">Post</button>
             </div>
-            <div id="posts-feed"></div>
+            <div id="posts"></div>
         </div>
 
         <!-- Contact Section -->
@@ -256,98 +249,75 @@
             document.body.classList.toggle('light-theme');
         });
 
-        // Social Feed System
+        // Community Feed System
+        let userId = "owner"; // Simple user identification
         let posts = JSON.parse(localStorage.getItem('posts')) || [];
 
         function loadPosts() {
-            const postsFeed = document.getElementById('posts-feed');
-            postsFeed.innerHTML = '';
-            posts.forEach((post, index) => {
-                const postElement = document.createElement('div');
-                postElement.className = 'post';
-                postElement.innerHTML = `
-                    <p>${post.text}</p>
+            const postsContainer = document.getElementById('posts');
+            postsContainer.innerHTML = '';
+            
+            posts.forEach(post => {
+                const postDiv = document.createElement('div');
+                postDiv.className = 'post';
+                postDiv.innerHTML = `
+                    <strong>${post.user}:</strong> ${post.text}
                     ${post.image ? `<img src="${post.image}" alt="Post image">` : ''}
                     <div class="post-actions">
-                        <span class="like-button ${post.liked ? 'liked' : ''}" onclick="toggleLike(${index})">
-                            ❤️ ${post.likes}
-                        </span>
-                        <span class="delete-button" onclick="deletePost(${index})">Delete</span>
+                        <button class="like-btn">
+                            <i class="fa fa-thumbs-up"></i> ${post.likes}
+                        </button>
                     </div>
-                    <div class="comments-section">
-                        <input type="text" class="comment-input" 
-                            placeholder="Write a comment..."
-                            onkeypress="if(event.key === 'Enter') addComment(${index}, this)">
-                        ${post.comments.map(comment => `
-                            <div class="comment">${comment}</div>
-                        `).join('')}
-                    </div>
+                    ${post.user === userId ? '<button class="delete-btn">Delete</button>' : ''}
                 `;
-                postsFeed.appendChild(postElement);
+
+                postDiv.querySelector('.like-btn').addEventListener('click', () => {
+                    post.likes++;
+                    localStorage.setItem('posts', JSON.stringify(posts));
+                    loadPosts();
+                });
+
+                if (post.user === userId) {
+                    postDiv.querySelector('.delete-btn').addEventListener('click', () => {
+                        posts = posts.filter(p => p.id !== post.id);
+                        localStorage.setItem('posts', JSON.stringify(posts));
+                        loadPosts();
+                    });
+                }
+
+                postsContainer.appendChild(postDiv);
             });
         }
 
-        document.getElementById('post-button').addEventListener('click', () => {
+        document.getElementById('post-btn').addEventListener('click', () => {
             const text = document.getElementById('post-text').value;
-            const imageInput = document.getElementById('post-image');
-            const image = imageInput.files[0];
+            const imageInput = document.getElementById('image-upload');
+            const file = imageInput.files[0];
 
-            if (text || image) {
+            if (text.trim() || file) {
                 const reader = new FileReader();
-                reader.onload = () => {
-                    posts.push({
-                        text,
-                        image: reader.result,
-                        likes: 0,
-                        liked: false,
-                        comments: []
-                    });
+                reader.onload = function(e) {
+                    const newPost = {
+                        id: Date.now(),
+                        user: userId,
+                        text: text,
+                        image: file ? e.target.result : null,
+                        likes: 0
+                    };
+
+                    posts.push(newPost);
                     localStorage.setItem('posts', JSON.stringify(posts));
                     loadPosts();
                     document.getElementById('post-text').value = '';
                     imageInput.value = '';
                 };
 
-                if (image) {
-                    reader.readAsDataURL(image);
-                } else {
-                    posts.push({
-                        text,
-                        likes: 0,
-                        liked: false,
-                        comments: []
-                    });
-                    localStorage.setItem('posts', JSON.stringify(posts));
-                    loadPosts();
-                    document.getElementById('post-text').value = '';
-                }
+                file ? reader.readAsDataURL(file) : reader.onload();
             }
         });
 
-        function toggleLike(index) {
-            const post = posts[index];
-            post.liked = !post.liked;
-            post.likes += post.liked ? 1 : -1;
-            localStorage.setItem('posts', JSON.stringify(posts));
-            loadPosts();
-        }
-
-        function deletePost(index) {
-            posts.splice(index, 1);
-            localStorage.setItem('posts', JSON.stringify(posts));
-            loadPosts();
-        }
-
-        function addComment(postIndex, input) {
-            if (input.value.trim()) {
-                posts[postIndex].comments.push(input.value.trim());
-                localStorage.setItem('posts', JSON.stringify(posts));
-                loadPosts();
-            }
-        }
-
+        // Initial load
         loadPosts();
     </script>
 </body>
 </html>
-
