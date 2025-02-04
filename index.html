@@ -59,6 +59,12 @@
             text-align: center;
             color: var(--accent-color);
             margin-bottom: 10px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         /* Sections */
@@ -68,6 +74,12 @@
             border-radius: 10px;
             margin: 40px 0;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            animation: slideUp 0.5s ease-in-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         h2 {
@@ -93,6 +105,12 @@
             background: var(--bg-color);
             color: var(--text-color);
             resize: none;
+            transition: border-color 0.3s;
+        }
+
+        #post-text:focus {
+            border-color: var(--accent-color);
+            outline: none;
         }
 
         .post {
@@ -101,12 +119,18 @@
             border-radius: 10px;
             margin-bottom: 20px;
             position: relative;
+            animation: fadeIn 0.5s ease-in-out;
         }
 
         .post img {
             max-width: 100%;
             border-radius: 5px;
             margin-top: 10px;
+            transition: transform 0.3s;
+        }
+
+        .post img:hover {
+            transform: scale(1.02);
         }
 
         .post-actions {
@@ -122,6 +146,11 @@
             color: var(--accent-color);
             padding: 5px 10px;
             border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .like-btn:hover {
+            background: rgba(0, 255, 136, 0.1);
         }
 
         .delete-btn {
@@ -134,6 +163,11 @@
             padding: 5px 10px;
             border-radius: 5px;
             cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .delete-btn:hover {
+            opacity: 0.8;
         }
 
         button {
@@ -161,6 +195,11 @@
             border-radius: 50%;
             cursor: pointer;
             z-index: 1000;
+            transition: transform 0.3s;
+        }
+
+        #theme-toggle:hover {
+            transform: rotate(180deg);
         }
 
         /* Responsive Design */
@@ -200,14 +239,7 @@
 
         <div class="section">
             <h2>Projects</h2>
-            <div class="project">
-                <h3>AI-Powered Business Platform</h3>
-                <p>Revolutionizing SME operations with AI integration</p>
-            </div>
-            <div class="project">
-                <h3>Blockchain Supply Chain</h3>
-                <p>Transparent logistics management system</p>
-            </div>
+            <p>🚀 Working on something exciting! Stay tuned for updates.</p>
         </div>
 
         <!-- Community Feed Section -->
@@ -250,7 +282,6 @@
         });
 
         // Community Feed System
-        let userId = "owner"; // Simple user identification
         let posts = JSON.parse(localStorage.getItem('posts')) || [];
 
         function loadPosts() {
@@ -261,14 +292,14 @@
                 const postDiv = document.createElement('div');
                 postDiv.className = 'post';
                 postDiv.innerHTML = `
-                    <strong>${post.user}:</strong> ${post.text}
+                    <strong>Anonymous User:</strong> ${post.text}
                     ${post.image ? `<img src="${post.image}" alt="Post image">` : ''}
                     <div class="post-actions">
                         <button class="like-btn">
                             <i class="fa fa-thumbs-up"></i> ${post.likes}
                         </button>
                     </div>
-                    ${post.user === userId ? '<button class="delete-btn">Delete</button>' : ''}
+                    <button class="delete-btn">Delete</button>
                 `;
 
                 postDiv.querySelector('.like-btn').addEventListener('click', () => {
@@ -277,13 +308,11 @@
                     loadPosts();
                 });
 
-                if (post.user === userId) {
-                    postDiv.querySelector('.delete-btn').addEventListener('click', () => {
-                        posts = posts.filter(p => p.id !== post.id);
-                        localStorage.setItem('posts', JSON.stringify(posts));
-                        loadPosts();
-                    });
-                }
+                postDiv.querySelector('.delete-btn').addEventListener('click', () => {
+                    posts = posts.filter(p => p.id !== post.id);
+                    localStorage.setItem('posts', JSON.stringify(posts));
+                    loadPosts();
+                });
 
                 postsContainer.appendChild(postDiv);
             });
@@ -299,7 +328,6 @@
                 reader.onload = function(e) {
                     const newPost = {
                         id: Date.now(),
-                        user: userId,
                         text: text,
                         image: file ? e.target.result : null,
                         likes: 0
