@@ -150,3 +150,16 @@
     </div>
 </body>
 </html>
+<button id="theme-toggle">Toggle Theme</button>
+<script>
+    const toggle = document.getElementById('theme-toggle');
+    toggle.addEventListener('click', () => {
+        document.body.classList.toggle('light-theme');
+    });
+</script>
+<style>
+    .light-theme {
+        background: #ffffff;
+        color: #1a1a1a;
+    }
+</style>
