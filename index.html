@@ -1,4 +1,16 @@
-<!DOCTYPE html>
+<button id="theme-toggle">Toggle Theme</button>
+<script>
+    const toggle = document.getElementById('theme-toggle');
+    toggle.addEventListener('click', () => {
+        document.body.classList.toggle('light-theme');
+    });
+</script>
+<style>
+    .light-theme {
+        background: #ffffff;
+        color: #1a1a1a;
+    }
+</style> <!DOCTYPE html>
 <html lang="en">
 <head><!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_TRACKING_ID"></script>
@@ -150,16 +162,4 @@
     </div>
 </body>
 </html>
-                                  <button id="theme-toggle">Toggle Theme</button>
-<script>
-    const toggle = document.getElementById('theme-toggle');
-    toggle.addEventListener('click', () => {
-        document.body.classList.toggle('light-theme');
-    });
-</script>
-<style>
-    .light-theme {
-        background: #ffffff;
-        color: #1a1a1a;
-    }
-</style>
+                                
