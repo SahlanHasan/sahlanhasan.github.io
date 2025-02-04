@@ -3,42 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sahlan Hasan - Tech Professional | Developer | Innovator</title>
-    <meta name="description" content="Sahlan Hasan - Tech Professional | Developer | Innovator. Explore my portfolio, skills, and projects.">
-    <meta name="keywords" content="Sahlan Hasan, Tech Professional, Developer, Innovator, Web Development, JavaScript, Cloud Computing">
-    <meta name="author" content="Sahlan Hasan">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>Sahlan Hasan - Portfolio & Social Hub</title>
     <style>
-        /* Modern Dark Theme */
+        :root {
+            --bg-color: #1a1a1a;
+            --text-color: #ffffff;
+            --card-bg: #2a2a2a;
+            --accent-color: #00ff88;
+            --border-color: #444;
+        }
+
+        /* Light Theme */
+        .light-theme {
+            --bg-color: #ffffff;
+            --text-color: #1a1a1a;
+            --card-bg: #f0f0f0;
+            --accent-color: #00cc66;
+            --border-color: #ddd;
+        }
+
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
-            padding: 0;
-            background: #1a1a1a; /* Dark background */
-            color: #ffffff; /* White text */
+            padding: 20px;
+            background: var(--bg-color);
+            color: var(--text-color);
             line-height: 1.6;
-            scroll-behavior: smooth;
+            transition: background 0.3s, color 0.3s;
         }
 
         .container {
             max-width: 800px;
             margin: 0 auto;
             padding: 40px 20px;
-            text-align: center;
         }
 
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            color: #00ff88; /* Neon green */
-            white-space: nowrap; /* Prevents breaking the name in mobile */
-        }
-
+        /* Profile Section */
         .profile-img {
             width: 150px;
             height: 150px;
             border-radius: 50%;
-            border: 4px solid #00ff88;
+            border: 4px solid var(--accent-color);
             margin: 20px auto;
             display: block;
             transition: transform 0.3s ease;
@@ -48,317 +53,270 @@
             transform: scale(1.1);
         }
 
-        .typewriter h1 {
-            overflow: hidden; /* Hide text until it types */
-            border-right: 0.15em solid #00ff88; /* Cursor effect */
-            white-space: nowrap;
-            margin: 0 auto;
-            letter-spacing: normal; /* Fixed spacing issue */
-            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end;
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+            color: var(--accent-color);
+            margin-bottom: 10px;
         }
 
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: #00ff88; }
-        }
-
+        /* Sections */
         .section {
-            margin: 40px 0;
+            background: var(--card-bg);
             padding: 20px;
-            background: #2a2a2a; /* Slightly lighter dark background */
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            margin: 40px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
+            color: var(--accent-color);
             font-size: 2rem;
-            color: #00ff88; /* Neon green */
             margin-bottom: 20px;
         }
 
-        p {
-            font-size: 1.1rem;
-            color: #cccccc; /* Light gray */
-        }
-
-        a {
-            color: #00ff88; /* Neon green */
-            text-decoration: none;
-            transition: opacity 0.3s ease;
-        }
-
-        a:hover {
-            opacity: 0.8;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .social-links a {
-            font-size: 1.5rem;
-            color: #00ff88; /* Neon green */
-        }
-
-        footer {
-            margin-top: 40px;
-            font-size: 0.9rem;
-            color: #777;
-            text-align: center; /* Center the footer text */
-        }
-
-        /* Light Theme */
-        .light-theme {
-            background: #ffffff;
-            color: #1a1a1a;
-        }
-
-        .light-theme .section {
-            background: #f0f0f0; /* Light background for sections */
-            color: #1a1a1a;
-        }
-
-        .light-theme h2 {
-            color: #00cc66; /* Slightly darker green for light mode */
-        }
-
-        .light-theme p {
-            color: #444; /* Darker text for light mode */
-        }
-
-        .light-theme a {
-            color: #00cc66; /* Slightly darker green for light mode */
-        }
-
-        /* Blog Section */
-        .blog-section {
-            margin: 40px 0;
+        /* Social Feed Styles */
+        .create-post {
+            background: var(--card-bg);
             padding: 20px;
-            background: #2a2a2a;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
         }
 
-        .blog-form input, .blog-form textarea, .blog-form button {
+        #post-text {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
-            border: 1px solid #444;
+            border: 1px solid var(--border-color);
             border-radius: 5px;
-            background: #2a2a2a;
-            color: #ffffff;
+            background: var(--bg-color);
+            color: var(--text-color);
         }
 
-        .blog-form button {
-            background: #00ff88;
-            color: #1a1a1a;
-            cursor: pointer;
+        .post {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
         }
 
-        .blog-form button:hover {
-            background: #00cc66;
-        }
-
-        .blog-posts {
-            margin-top: 20px;
-        }
-
-        .blog-post {
-            background: #333;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
-
-        .blog-post img {
+        .post img {
             max-width: 100%;
             border-radius: 5px;
+            margin-top: 10px;
         }
 
-        .blog-post h3 {
-            color: #00ff88;
+        .post-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .like-button {
+            cursor: pointer;
+            color: var(--accent-color);
+        }
+
+        .comments-section {
+            margin-top: 15px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 10px;
             margin: 10px 0;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background: var(--bg-color);
+            color: var(--text-color);
         }
 
-        .blog-post p {
-            color: #cccccc;
+        .comment {
+            background: var(--bg-color);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+
+        /* Theme Toggle */
+        #theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1000;
         }
 
         /* Responsive Design */
         @media screen and (max-width: 600px) {
             h1 {
-                font-size: 2.5rem; /* Adjust font size for mobile */
-                text-align: center;
+                font-size: 2.5rem;
             }
-
-            .section {
-                margin: 30px 0; /* Reduced distance between sections */
-            }
-
+            
             .container {
-                padding: 20px; /* More compact padding */
+                padding: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Modern Theme Toggle -->
-    <div id="theme-toggle">
-        <div class="toggle-circle"></div>
+    <button id="theme-toggle">🌓</button>
+    
+    <div class="container">
+        <!-- Profile Section -->
+        <img src="https://i.postimg.cc/Gh43Lv1z/PYUQSPU2-HRDB7-PFG7-BEEZ232-VE.avif" 
+             alt="Sahlan Hasan" 
+             class="profile-img">
+        <h1>Sahlan Hasan</h1>
+        <p style="text-align: center; color: var(--accent-color);">
+            Tech Professional | Developer | Innovator
+        </p>
+
+        <!-- About Me -->
+        <div class="section">
+            <h2>About Me</h2>
+            <p>A passionate tech professional with expertise in modern web development and entrepreneurship.</p>
+        </div>
+
+        <!-- Skills -->
+        <div class="section">
+            <h2>Skills</h2>
+            <ul>
+                <li>Tech Entrepreneurship</li>
+                <li>Full Stack Development</li>
+                <li>AI & Machine Learning</li>
+            </ul>
+        </div>
+
+        <!-- Projects -->
+        <div class="section">
+            <h2>Projects</h2>
+            <div class="project">
+                <h3>AI-Powered Business Platform</h3>
+                <p>Revolutionizing SME operations with AI integration</p>
+            </div>
+            <div class="project">
+                <h3>Blockchain Supply Chain</h3>
+                <p>Transparent logistics management system</p>
+            </div>
+        </div>
+
+        <!-- Social Feed Section -->
+        <div class="section">
+            <h2>Community Feed</h2>
+            <div class="create-post">
+                <textarea id="post-text" placeholder="What's on your mind?"></textarea>
+                <input type="file" id="post-image" accept="image/*">
+                <button id="post-button">Post</button>
+            </div>
+            <div id="posts-feed"></div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="section">
+            <h2>Contact</h2>
+            <p>📧 <a href="mailto:sahlanhasan08@gmail.com" style="color: var(--accent-color);">
+                sahlanhasan08@gmail.com
+            </a></p>
+            <div style="display: flex; gap: 20px; justify-content: center; margin-top: 20px;">
+                <a href="https://www.linkedin.com/in/your-profile" 
+                   style="color: var(--accent-color);" 
+                   target="_blank">
+                    LinkedIn
+                </a>
+                <a href="https://github.com/your-profile" 
+                   style="color: var(--accent-color);" 
+                   target="_blank">
+                    GitHub
+                </a>
+            </div>
+        </div>
     </div>
 
     <script>
         // Theme Toggle
-        const toggle = document.getElementById('theme-toggle');
-        toggle.addEventListener('click', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('light-theme');
         });
 
-        // Blog System
-        const blogForm = document.getElementById('blog-form');
-        const blogPosts = document.getElementById('blog-posts');
+        // Social Feed System
+        let posts = JSON.parse(localStorage.getItem('posts')) || [];
 
-        // Load saved posts from localStorage
-        const savedPosts = JSON.parse(localStorage.getItem('blogPosts')) || [];
-        savedPosts.forEach(post => {
-            const postElement = document.createElement('div');
-            postElement.className = 'blog-post';
-            postElement.innerHTML = `
-                <h3>${post.name}</h3>
-                <p>${post.comment}</p>
-                ${post.image ? `<img src="${post.image}" alt="Uploaded Image">` : ''}
-            `;
-            blogPosts.appendChild(postElement);
-        });
+        function loadPosts() {
+            const postsFeed = document.getElementById('posts-feed');
+            postsFeed.innerHTML = '';
+            posts.forEach((post, index) => {
+                const postElement = document.createElement('div');
+                postElement.className = 'post';
+                postElement.innerHTML = `
+                    <p>${post.text}</p>
+                    ${post.image ? `<img src="${post.image}" alt="Post image">` : ''}
+                    <div class="post-actions">
+                        <span class="like-button" onclick="toggleLike(${index})">
+                            ❤️ ${post.likes}
+                        </span>
+                    </div>
+                    <div class="comments-section">
+                        <input type="text" class="comment-input" 
+                            placeholder="Write a comment..."
+                            onkeypress="if(event.key === 'Enter') addComment(${index}, this)">
+                        ${post.comments.map(comment => `
+                            <div class="comment">${comment}</div>
+                        `).join('')}
+                    </div>
+                `;
+                postsFeed.appendChild(postElement);
+            });
+        }
 
-        // Handle form submission
-        blogForm.addEventListener('submit', function (e) {
-            e.preventDefault();
+        document.getElementById('post-button').addEventListener('click', () => {
+            const text = document.getElementById('post-text').value;
+            const imageInput = document.getElementById('post-image');
+            const image = imageInput.files[0];
 
-            const name = document.getElementById('blog-name').value;
-            const comment = document.getElementById('blog-comment').value;
-            const image = document.getElementById('blog-image').files[0];
-
-            if (name && comment) {
+            if (text || image) {
                 const reader = new FileReader();
-                reader.onload = function (e) {
-                    const post = {
-                        name: name,
-                        comment: comment,
-                        image: e.target.result
-                    };
-
-                    // Save post to localStorage
-                    savedPosts.push(post);
-                    localStorage.setItem('blogPosts', JSON.stringify(savedPosts));
-
-                    // Display the new post
-                    const postElement = document.createElement('div');
-                    postElement.className = 'blog-post';
-                    postElement.innerHTML = `
-                        <h3>${name}</h3>
-                        <p>${comment}</p>
-                        ${image ? `<img src="${e.target.result}" alt="Uploaded Image">` : ''}
-                    `;
-                    blogPosts.prepend(postElement);
+                reader.onload = function(e) {
+                    posts.push({
+                        text: text,
+                        image: e.target.result,
+                        likes: 0,
+                        comments: []
+                    });
+                    localStorage.setItem('posts', JSON.stringify(posts));
+                    loadPosts();
+                    document.getElementById('post-text').value = '';
+                    imageInput.value = '';
                 };
-
-                if (image) {
-                    reader.readAsDataURL(image);
-                } else {
-                    const post = {
-                        name: name,
-                        comment: comment,
-                        image: null
-                    };
-
-                    // Save post to localStorage
-                    savedPosts.push(post);
-                    localStorage.setItem('blogPosts', JSON.stringify(savedPosts));
-
-                    // Display the new post
-                    const postElement = document.createElement('div');
-                    postElement.className = 'blog-post';
-                    postElement.innerHTML = `
-                        <h3>${name}</h3>
-                        <p>${comment}</p>
-                    `;
-                    blogPosts.prepend(postElement);
-                }
-
-                blogForm.reset();
-            } else {
-                alert('Please fill out all fields.');
+                image ? reader.readAsDataURL(image) : reader.onload();
             }
         });
+
+        window.toggleLike = (index) => {
+            posts[index].likes++;
+            localStorage.setItem('posts', JSON.stringify(posts));
+            loadPosts();
+        };
+
+        window.addComment = (index, input) => {
+            const comment = input.value.trim();
+            if (comment) {
+                posts[index].comments.push(comment);
+                localStorage.setItem('posts', JSON.stringify(posts));
+                loadPosts();
+                input.value = '';
+            }
+        };
+
+        // Initial load
+        loadPosts();
     </script>
-
-    <div class="container">
-        <!-- Profile Image -->
-        <img src="https://i.postimg.cc/Gh43Lv1z/PYUQSPU2-HRDB7-PFG7-BEEZ232-VE.avif" alt="Sahlan Hasan - Profile Picture" class="profile-img">
-        <div class="typewriter">
-            <h1>Sahlan Hasan</h1>
-        </div>
-        <p>Tech Professional | Developer | Innovator</p>
-
-        <div class="section">
-            <h2>About Me</h2>
-            <p>Hi, I'm Sahlan Hasan. A passionate tech professional with expertise in modern web development.</p>
-        </div>
-
-        <div class="section">
-            <h2>Skills</h2>
-            <ul>
-                <li>Tech Entrepreneur</li>
-                <li>Web Development</li>
-                <li>JavaScript & Frameworks</li>
-            </ul>
-        </div>
-
-        <!-- Projects Section -->
-        <div class="section">
-            <h2>Projects</h2>
-            <h3>Project 1</h3>
-            <p>Description of your project.</p>
-            <h3>Project 2</h3>
-            <p>Description of another project.</p>
-        </div>
-
-        <!-- Blog Section -->
-        <div class="blog-section">
-            <h2>Blog</h2>
-            <form id="blog-form" class="blog-form">
-                <input type="text" id="blog-name" placeholder="Your Name" required>
-                <textarea id="blog-comment" placeholder="Your Comment" rows="4" required></textarea>
-                <input type="file" id="blog-image" accept="image/*">
-                <button type="submit">Post</button>
-            </form>
-            <div id="blog-posts" class="blog-posts">
-                <!-- Blog posts will appear here -->
-            </div>
-        </div>
-
-        <!-- Contact Me Section (Moved to the bottom) -->
-        <div class="section">
-            <h2>Contact</h2>
-            <p>📧 Email: <a href="mailto:sahlanhasan08@gmail.com">sahlanhasan08@gmail.com</a></p>
-            <div class="social-links">
-                <a href="https://www.linkedin.com/in/your-linkedin-profile" target="_blank">LinkedIn</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2023 Sahlan Hasan. All rights reserved.</p>
-    </footer>
 </body>
 </html>
