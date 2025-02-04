@@ -31,17 +31,7 @@
             font-size: 3rem;
             margin-bottom: 10px;
             color: #00ff88; /* Neon green */
-            animation: glow 2s infinite alternate;
             white-space: nowrap; /* Prevents breaking the name in mobile */
-        }
-
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88;
-            }
-            to {
-                text-shadow: 0 0 20px #00ff88, 0 0 40px #00ff88;
-            }
         }
 
         .profile-img {
@@ -64,7 +54,7 @@
             white-space: nowrap;
             margin: 0 auto;
             letter-spacing: 0.15em;
-            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end;
         }
 
         @keyframes typing {
@@ -122,16 +112,7 @@
             margin-top: 40px;
             font-size: 0.9rem;
             color: #777;
-            animation: glow-footer 2s infinite alternate;
-        }
-
-        @keyframes glow-footer {
-            from {
-                text-shadow: 0 0 5px #00ff88, 0 0 10px #00ff88;
-            }
-            to {
-                text-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88;
-            }
+            text-align: center; /* Center the footer text */
         }
 
         /* Light Theme */
@@ -140,14 +121,21 @@
             color: #1a1a1a;
         }
 
-        /* Parallax Effect */
-        .parallax {
-            background-image: url('https://i.postimg.cc/your-image.jpg');
-            min-height: 300px;
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
+        .light-theme .section {
+            background: #f0f0f0; /* Light background for sections */
+            color: #1a1a1a;
+        }
+
+        .light-theme h2 {
+            color: #00cc66; /* Slightly darker green for light mode */
+        }
+
+        .light-theme p {
+            color: #444; /* Darker text for light mode */
+        }
+
+        .light-theme a {
+            color: #00cc66; /* Slightly darker green for light mode */
         }
 
         /* Modern Theme Toggle */
@@ -184,49 +172,6 @@
             transform: translateX(20px);
         }
 
-        /* Contact Form */
-        form input, form textarea, form button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #444;
-            border-radius: 5px;
-            background: #2a2a2a;
-            color: #ffffff;
-        }
-
-        form button {
-            background: #00ff88;
-            color: #1a1a1a;
-            cursor: pointer;
-        }
-
-        form button:hover {
-            background: #00cc66;
-        }
-
-        /* Projects Section */
-        .projects-section {
-            background: #2a2a2a;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 40px 0;
-        }
-
-        .project-item {
-            margin-bottom: 15px;
-        }
-
-        .project-item h3 {
-            font-size: 1.8rem;
-            color: #00ff88;
-        }
-
-        .project-item p {
-            color: #cccccc;
-            font-size: 1rem;
-        }
-
         /* Responsive Design */
         @media screen and (max-width: 600px) {
             h1 {
@@ -255,20 +200,6 @@
         toggle.addEventListener('click', () => {
             document.body.classList.toggle('light-theme');
         });
-
-        // Back to top button logic
-        const backToTopButton = document.getElementById('back-to-top');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTopButton.style.display = 'block';
-            } else {
-                backToTopButton.style.display = 'none';
-            }
-        });
-
-        backToTopButton.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
     </script>
 
     <div class="container">
@@ -289,39 +220,32 @@
             <ul>
                 <li>Tech Entrepreneur</li>
                 <li>Web Development</li>
-                <li>Cloud Computing</li>
-                <li>JavaScript, HTML, CSS</li>
+                <li>JavaScript & Frameworks</li>
             </ul>
         </div>
 
-        <!-- Contact Me Section -->
+        <!-- Projects Section -->
         <div class="section">
-            <h2>Contact Me</h2>
-            <form>
-                <input type="text" placeholder="Your Name" required>
-                <input type="email" placeholder="Your Email" required>
-                <textarea placeholder="Your Message" rows="4" required></textarea>
-                <button type="submit">Send Message</button>
-            </form>
+            <h2>Projects</h2>
+            <h3>Project 1</h3>
+            <p>Description of your project.</p>
+            <h3>Project 2</h3>
+            <p>Description of another project.</p>
         </div>
 
-        <!-- Projects Section -->
-        <div class="projects-section">
-            <h2>Projects</h2>
-            <div class="project-item">
-                <h3>Project 1</h3>
-                <p>Description of Project 1.</p>
-            </div>
-            <div class="project-item">
-                <h3>Project 2</h3>
-                <p>Description of Project 2.</p>
+        <!-- Contact Me Section (Moved to the bottom) -->
+        <div class="section">
+            <h2>Contact</h2>
+            <p>📧 Email: <a href="mailto:sahlanhasan08@gmail.com">sahlanhasan08@gmail.com</a></p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/your-linkedin-profile" target="_blank">LinkedIn</a>
             </div>
         </div>
     </div>
 
+    <!-- Footer -->
     <footer>
         <p>&copy; 2023 Sahlan Hasan. All rights reserved.</p>
     </footer>
 </body>
 </html>
-
