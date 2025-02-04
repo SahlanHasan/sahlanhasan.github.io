@@ -17,6 +17,7 @@
             background: #1a1a1a; /* Dark background */
             color: #ffffff; /* White text */
             line-height: 1.6;
+            scroll-behavior: smooth;
         }
 
         .container {
@@ -54,6 +55,25 @@
 
         .profile-img:hover {
             transform: scale(1.1);
+        }
+
+        .typewriter h1 {
+            overflow: hidden; /* Hide text until it types */
+            border-right: 0.15em solid #00ff88; /* Cursor effect */
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: 0.15em;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #00ff88; }
         }
 
         .section {
@@ -101,12 +121,84 @@
             margin-top: 40px;
             font-size: 0.9rem;
             color: #777;
+            animation: glow-footer 2s infinite alternate;
+        }
+
+        @keyframes glow-footer {
+            from {
+                text-shadow: 0 0 5px #00ff88, 0 0 10px #00ff88;
+            }
+            to {
+                text-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88;
+            }
         }
 
         /* Light Theme */
         .light-theme {
             background: #ffffff;
             color: #1a1a1a;
+        }
+
+        /* Parallax Effect */
+        .parallax {
+            background-image: url('https://i.postimg.cc/your-image.jpg');
+            min-height: 300px;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Back to Top Button */
+        #back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #00ff88;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none; /* Hidden by default */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        #back-to-top:hover {
+            background: #00cc66;
+        }
+
+        /* Contact Form */
+        form input, form textarea, form button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background: #2a2a2a;
+            color: #ffffff;
+        }
+
+        form button {
+            background: #00ff88;
+            color: #1a1a1a;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background: #00cc66;
+        }
+
+        /* Particle.js */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
         }
     </style>
 </head>
@@ -117,12 +209,28 @@
         toggle.addEventListener('click', () => {
             document.body.classList.toggle('light-theme');
         });
+
+        // Back to top button logic
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
     </script>
 
     <div class="container">
-        <!-- Replace YOUR_PROFILE_IMAGE_URL with your image link -->
+        <!-- Profile Image -->
         <img src="https://i.postimg.cc/Gh43Lv1z/PYUQSPU2-HRDB7-PFG7-BEEZ232-VE.avif" alt="Sahlan Hasan - Profile Picture" class="profile-img">
-        <h1>Sahlan Hasan</h1>
+        <div class="typewriter">
+            <h1>Sahlan Hasan</h1>
+        </div>
         <p>Tech Professional | Developer | Innovator</p>
 
         <div class="section">
@@ -135,29 +243,48 @@
             <ul>
                 <li>Tech Entrepreneur</li>
                 <li>Web Development</li>
-                <li>JavaScript & Frameworks</li>
+                <li>Cloud Computing</li>
+                <li>JavaScript, HTML, CSS</li>
             </ul>
         </div>
 
-        <div class="section">
-            <h2>Projects</h2>
-            <h3>Project 1</h3>
-            <p>Description of your project.</p>
-            <h3>Project 2</h3>
-            <p>Description of another project.</p>
-        </div>
+        <!-- Parallax Section -->
+        <div class="parallax"></div>
 
+        <!-- Contact Form Section -->
         <div class="section">
-            <h2>Contact</h2>
-            <p>📧 Email: <a href="mailto:sahlanhasan08@gmail.com">sahlanhasan08@gmail.com</a></p>
-            <div class="social-links">
-                <a href="https://www.linkedin.com/in/your-linkedin-profile" target="_blank">LinkedIn</a>
-            </div>
+            <h2>Contact Me</h2>
+            <form action="https://formspree.io/f/your-form-id" method="POST">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
         </div>
-
-        <footer>
-            &copy; 2023 Sahlan Hasan. All rights reserved.
-        </footer>
     </div>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" title="Go to top">↑</button>
+
+    <!-- Particle.js Script -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80
+                },
+                shape: {
+                    type: 'circle'
+                },
+                size: {
+                    value: 3
+                },
+                move: {
+                    speed: 1
+                }
+            }
+        });
+    </script>
 </body>
 </html>
