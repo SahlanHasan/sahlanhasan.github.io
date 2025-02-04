@@ -216,15 +216,30 @@
     </div>
 
     <script>
+        // Theme Toggle
         const toggle = document.getElementById('theme-toggle');
         toggle.addEventListener('click', () => {
             document.body.classList.toggle('light-theme');
         });
 
-        // Blog Form Submission
+        // Blog System
         const blogForm = document.getElementById('blog-form');
         const blogPosts = document.getElementById('blog-posts');
 
+        // Load saved posts from localStorage
+        const savedPosts = JSON.parse(localStorage.getItem('blogPosts')) || [];
+        savedPosts.forEach(post => {
+            const postElement = document.createElement('div');
+            postElement.className = 'blog-post';
+            postElement.innerHTML = `
+                <h3>${post.name}</h3>
+                <p>${post.comment}</p>
+                ${post.image ? `<img src="${post.image}" alt="Uploaded Image">` : ''}
+            `;
+            blogPosts.appendChild(postElement);
+        });
+
+        // Handle form submission
         blogForm.addEventListener('submit', function (e) {
             e.preventDefault();
 
@@ -235,26 +250,48 @@
             if (name && comment) {
                 const reader = new FileReader();
                 reader.onload = function (e) {
-                    const post = document.createElement('div');
-                    post.className = 'blog-post';
-                    post.innerHTML = `
+                    const post = {
+                        name: name,
+                        comment: comment,
+                        image: e.target.result
+                    };
+
+                    // Save post to localStorage
+                    savedPosts.push(post);
+                    localStorage.setItem('blogPosts', JSON.stringify(savedPosts));
+
+                    // Display the new post
+                    const postElement = document.createElement('div');
+                    postElement.className = 'blog-post';
+                    postElement.innerHTML = `
                         <h3>${name}</h3>
                         <p>${comment}</p>
                         ${image ? `<img src="${e.target.result}" alt="Uploaded Image">` : ''}
                     `;
-                    blogPosts.prepend(post);
+                    blogPosts.prepend(postElement);
                 };
 
                 if (image) {
                     reader.readAsDataURL(image);
                 } else {
-                    const post = document.createElement('div');
-                    post.className = 'blog-post';
-                    post.innerHTML = `
+                    const post = {
+                        name: name,
+                        comment: comment,
+                        image: null
+                    };
+
+                    // Save post to localStorage
+                    savedPosts.push(post);
+                    localStorage.setItem('blogPosts', JSON.stringify(savedPosts));
+
+                    // Display the new post
+                    const postElement = document.createElement('div');
+                    postElement.className = 'blog-post';
+                    postElement.innerHTML = `
                         <h3>${name}</h3>
                         <p>${comment}</p>
                     `;
-                    blogPosts.prepend(post);
+                    blogPosts.prepend(postElement);
                 }
 
                 blogForm.reset();
