@@ -53,7 +53,7 @@
             border-right: 0.15em solid #00ff88; /* Cursor effect */
             white-space: nowrap;
             margin: 0 auto;
-            letter-spacing: 0.15em;
+            letter-spacing: normal; /* Fixed spacing issue */
             animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end;
         }
 
@@ -138,38 +138,58 @@
             color: #00cc66; /* Slightly darker green for light mode */
         }
 
-        /* Modern Theme Toggle */
-        #theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 40px; /* Made it smaller */
-            height: 20px;
-            border-radius: 50px;
-            background: #444;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-            transition: background 0.3s ease;
+        /* Blog Section */
+        .blog-section {
+            margin: 40px 0;
+            padding: 20px;
+            background: #2a2a2a;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
 
-        #theme-toggle .toggle-circle {
-            width: 14px; /* Smaller circle */
-            height: 14px;
-            border-radius: 50%;
+        .blog-form input, .blog-form textarea, .blog-form button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background: #2a2a2a;
+            color: #ffffff;
+        }
+
+        .blog-form button {
             background: #00ff88;
-            transition: transform 0.3s ease;
+            color: #1a1a1a;
+            cursor: pointer;
         }
 
-        .light-theme #theme-toggle {
-            background: #f0f0f0;
+        .blog-form button:hover {
+            background: #00cc66;
         }
 
-        .light-theme #theme-toggle .toggle-circle {
-            transform: translateX(20px);
+        .blog-posts {
+            margin-top: 20px;
+        }
+
+        .blog-post {
+            background: #333;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .blog-post img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+
+        .blog-post h3 {
+            color: #00ff88;
+            margin: 10px 0;
+        }
+
+        .blog-post p {
+            color: #cccccc;
         }
 
         /* Responsive Design */
@@ -199,6 +219,48 @@
         const toggle = document.getElementById('theme-toggle');
         toggle.addEventListener('click', () => {
             document.body.classList.toggle('light-theme');
+        });
+
+        // Blog Form Submission
+        const blogForm = document.getElementById('blog-form');
+        const blogPosts = document.getElementById('blog-posts');
+
+        blogForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('blog-name').value;
+            const comment = document.getElementById('blog-comment').value;
+            const image = document.getElementById('blog-image').files[0];
+
+            if (name && comment) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const post = document.createElement('div');
+                    post.className = 'blog-post';
+                    post.innerHTML = `
+                        <h3>${name}</h3>
+                        <p>${comment}</p>
+                        ${image ? `<img src="${e.target.result}" alt="Uploaded Image">` : ''}
+                    `;
+                    blogPosts.prepend(post);
+                };
+
+                if (image) {
+                    reader.readAsDataURL(image);
+                } else {
+                    const post = document.createElement('div');
+                    post.className = 'blog-post';
+                    post.innerHTML = `
+                        <h3>${name}</h3>
+                        <p>${comment}</p>
+                    `;
+                    blogPosts.prepend(post);
+                }
+
+                blogForm.reset();
+            } else {
+                alert('Please fill out all fields.');
+            }
         });
     </script>
 
@@ -231,6 +293,20 @@
             <p>Description of your project.</p>
             <h3>Project 2</h3>
             <p>Description of another project.</p>
+        </div>
+
+        <!-- Blog Section -->
+        <div class="blog-section">
+            <h2>Blog</h2>
+            <form id="blog-form" class="blog-form">
+                <input type="text" id="blog-name" placeholder="Your Name" required>
+                <textarea id="blog-comment" placeholder="Your Comment" rows="4" required></textarea>
+                <input type="file" id="blog-image" accept="image/*">
+                <button type="submit">Post</button>
+            </form>
+            <div id="blog-posts" class="blog-posts">
+                <!-- Blog posts will appear here -->
+            </div>
         </div>
 
         <!-- Contact Me Section (Moved to the bottom) -->
