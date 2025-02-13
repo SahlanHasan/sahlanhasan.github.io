@@ -9,6 +9,22 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
+    /* Scroll Progress Bar */
+    #progressContainer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: rgba(0, 0, 0, 0.1);
+      z-index: 2000;
+    }
+    #progressBar {
+      height: 100%;
+      background: var(--accent-color);
+      width: 0%;
+    }
+    
     /* CSS Variables and Base Styles */
     :root {
       --bg-color: #1a1a1a;
@@ -41,7 +57,7 @@
     /* Fixed Navigation Bar */
     header {
       position: fixed;
-      top: 0;
+      top: 5px; /* below progress bar */
       width: 100%;
       background: var(--header-bg);
       padding: 10px 20px;
@@ -134,10 +150,10 @@
     #hero .btn:hover {
       opacity: 0.8;
     }
-    /* Main Container */
+    /* Main Content Container */
     .container {
       max-width: 1000px;
-      margin: 100px auto 40px auto;
+      margin: 120px auto 40px auto; /* adjusted for fixed header & progress bar */
       padding: 20px;
     }
     /* Section Styles */
@@ -175,6 +191,34 @@
     .section ul li {
       margin-bottom: 10px;
     }
+    /* Download Resume Button */
+    .btn-download {
+      margin-top: 10px;
+      display: inline-block;
+      padding: 10px 20px;
+      background: var(--accent-color);
+      color: var(--bg-color);
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    .btn-download:hover {
+      opacity: 0.8;
+    }
+    /* Testimonials Section */
+    .testimonial-slider {
+      position: relative;
+      overflow: hidden;
+    }
+    .testimonial {
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
+    .testimonial.active {
+      display: block;
+    }
     /* Community Feed Specific Styles */
     .create-post {
       background: var(--card-bg);
@@ -184,6 +228,7 @@
       border: 2px dashed var(--accent-color);
       text-align: center;
     }
+    .create-post input[type="text"],
     .create-post textarea {
       width: 100%;
       padding: 10px;
@@ -192,7 +237,6 @@
       border-radius: 5px;
       background: var(--bg-color);
       color: var(--text-color);
-      resize: none;
     }
     .create-post input[type="file"] {
       display: none;
@@ -205,6 +249,7 @@
       border-radius: 5px;
       cursor: pointer;
       transition: opacity 0.3s;
+      margin-bottom: 10px;
     }
     .file-label:hover {
       opacity: 0.8;
@@ -309,6 +354,11 @@
   </style>
 </head>
 <body>
+  <!-- Scroll Progress Bar -->
+  <div id="progressContainer">
+    <div id="progressBar"></div>
+  </div>
+  
   <!-- Navigation -->
   <header>
     <nav>
@@ -317,7 +367,9 @@
       <ul id="navbar">
         <li><a href="#hero">Home</a></li>
         <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
         <li><a href="#community">Community</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -343,6 +395,7 @@
       <p>
         Hi, I'm Sahlan Hasan, CEO &amp; Founder of NeuraFlow AI Pro. With a deep passion for technology and innovation, I've built a career bridging the gap between entrepreneurial vision and cutting-edge web development. My journey is defined by creativity, dedication, and the drive to create solutions that push boundaries—from modern web applications to pioneering AI-driven projects.
       </p>
+      <a href="resume.pdf" class="btn-download" download>Download Resume</a>
     </section>
     
     <!-- Skills Section -->
@@ -366,10 +419,30 @@
       </div>
     </section>
     
+    <!-- Testimonials Section -->
+    <section class="section" id="testimonials">
+      <h2>Testimonials</h2>
+      <div class="testimonial-slider">
+        <div class="testimonial active">
+          <p>"Sahlan's innovative approach is truly inspiring!"</p>
+          <small>- Jane Doe, CEO of TechCorp</small>
+        </div>
+        <div class="testimonial">
+          <p>"Working with him has transformed our business."</p>
+          <small>- John Smith, CTO of Innovate Inc.</small>
+        </div>
+        <div class="testimonial">
+          <p>"His expertise in web development and AI is unmatched."</p>
+          <small>- Alex Lee, Founder of StartupX</small>
+        </div>
+      </div>
+    </section>
+    
     <!-- Community Feed Section -->
     <section class="section" id="community">
       <h2>Community Feed</h2>
       <div class="create-post">
+        <input type="text" id="username-input" placeholder="Your Name (optional)">
         <textarea id="post-text" placeholder="What's on your mind? Share your thoughts..."></textarea>
         <br>
         <label for="image-upload" class="file-label">
@@ -384,9 +457,7 @@
     <!-- Contact Section -->
     <section class="section" id="contact">
       <h2>Contact</h2>
-      <p>📧 <a href="mailto:sahlanhasan08@gmail.com" style="color: var(--accent-color);">
-        sahlanhasan08@gmail.com
-      </a></p>
+      <p>📧 <a href="mailto:sahlanhasan08@gmail.com" style="color: var(--accent-color);">sahlanhasan08@gmail.com</a></p>
       <p>Explore more: <a href="https://neuraflowai.github.io/NeuraFlowPRO.COM/" target="_blank" style="color: var(--accent-color);">NeuraFlow AI Pro Website</a></p>
     </section>
   </div>
@@ -400,6 +471,14 @@
   <button id="back-to-top">Back to Top</button>
   
   <script>
+    // Scroll Progress Bar Update
+    window.addEventListener("scroll", function() {
+      let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      let scrolled = (winScroll / height) * 100;
+      document.getElementById("progressBar").style.width = scrolled + "%";
+    });
+    
     // Mobile Menu Toggle
     const mobileMenu = document.getElementById('mobile-menu');
     const navbar = document.getElementById('navbar');
@@ -413,6 +492,22 @@
       document.body.classList.toggle('light-theme');
     });
     
+    // Testimonials Slider
+    let testimonialIndex = 0;
+    function showTestimonial(index) {
+      const testimonials = document.querySelectorAll('.testimonial');
+      testimonials.forEach((testimonial, i) => {
+        testimonial.classList.remove('active');
+      });
+      testimonials[index].classList.add('active');
+    }
+    function nextTestimonial() {
+      const testimonials = document.querySelectorAll('.testimonial');
+      testimonialIndex = (testimonialIndex + 1) % testimonials.length;
+      showTestimonial(testimonialIndex);
+    }
+    setInterval(nextTestimonial, 5000);
+    
     // Community Feed System
     let posts = JSON.parse(localStorage.getItem('posts')) || [];
     
@@ -423,7 +518,7 @@
         const postDiv = document.createElement('div');
         postDiv.className = 'post';
         postDiv.innerHTML = `
-          <strong>Anonymous User:</strong> <span class="post-text">${post.text}</span>
+          <strong>${post.username || "Anonymous"}:</strong> <span class="post-text">${post.text}</span>
           ${post.image ? `<img src="${post.image}" alt="Post image">` : ''}
           <small>${post.timestamp}</small>
           <div class="post-actions">
@@ -453,7 +548,7 @@
           const newText = prompt('Edit your post:', post.text);
           if (newText !== null && newText.trim() !== '') {
             post.text = newText;
-            post.timestamp = new Date().toLocaleString(); // update timestamp
+            post.timestamp = new Date().toLocaleString();
             localStorage.setItem('posts', JSON.stringify(posts));
             loadPosts();
           }
@@ -475,6 +570,7 @@
     }
     
     document.getElementById('post-btn').addEventListener('click', () => {
+      const usernameInput = document.getElementById('username-input').value || "You";
       const text = document.getElementById('post-text').value;
       const imageInput = document.getElementById('image-upload');
       const file = imageInput.files[0];
@@ -483,6 +579,7 @@
         reader.onload = function(e) {
           const newPost = {
             id: Date.now(),
+            username: usernameInput,
             text: text,
             image: file ? e.target.result : null,
             likes: 0,
@@ -493,10 +590,39 @@
           loadPosts();
           document.getElementById('post-text').value = '';
           imageInput.value = '';
+          document.getElementById('username-input').value = '';
         };
         file ? reader.readAsDataURL(file) : reader.onload();
       }
     });
+    
+    // Dummy Global Feed Simulation: Adds random dummy posts periodically
+    function addDummyPost() {
+      const dummyNames = ["TechGuru", "RandomUser", "Innovator", "CodeMaster", "DigitalNomad", "CyberSamurai", "FutureVisionary"];
+      const dummyMessages = [
+        "Loving the vibe here!",
+        "This community is awesome!",
+        "Great work, everyone!",
+        "Keep innovating!",
+        "Incredible projects!",
+        "Tech is life!",
+        "Inspired by the creativity!"
+      ];
+      let randomName = dummyNames[Math.floor(Math.random() * dummyNames.length)];
+      let randomMessage = dummyMessages[Math.floor(Math.random() * dummyMessages.length)];
+      const newPost = {
+        id: Date.now(),
+        username: randomName,
+        text: randomMessage,
+        image: null,
+        likes: 0,
+        timestamp: new Date().toLocaleString()
+      };
+      posts.push(newPost);
+      localStorage.setItem('posts', JSON.stringify(posts));
+      loadPosts();
+    }
+    setInterval(addDummyPost, 30000); // every 30 seconds
     
     // Back to Top Button
     const backToTopBtn = document.getElementById('back-to-top');
