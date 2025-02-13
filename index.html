@@ -463,7 +463,7 @@
       </div>
       <div id="posts"></div>
       <p style="font-size:0.9rem; color:#aaa; text-align:center; margin-top:10px;">
-        Note: This is a simulated community feed. For a truly global feed where posts are shared among all users, a backend server is required.
+        Note: This is a simulated community feed. For a truly global feed, a backend server is required.
       </p>
     </section>
     
@@ -521,13 +521,15 @@
     }
     setInterval(nextTestimonial, 5000);
     
-    // Community Feed System
+    // Community Feed System with Newest Posts on Top
     let posts = JSON.parse(localStorage.getItem('posts')) || [];
     
     function loadPosts() {
       const postsContainer = document.getElementById('posts');
       postsContainer.innerHTML = '';
-      posts.forEach((post, index) => {
+      // Iterate in reverse order so newest posts are at the top
+      for (let i = posts.length - 1; i >= 0; i--) {
+        let post = posts[i];
         const postDiv = document.createElement('div');
         postDiv.className = 'post';
         postDiv.innerHTML = `
@@ -554,7 +556,7 @@
         
         // Delete Button
         postDiv.querySelector('.delete-btn').addEventListener('click', () => {
-          posts = posts.filter((_, i) => i !== index);
+          posts = posts.filter((_, j) => j !== i);
           localStorage.setItem('posts', JSON.stringify(posts));
           loadPosts();
         });
@@ -582,7 +584,7 @@
         });
         
         postsContainer.appendChild(postDiv);
-      });
+      }
     }
     
     document.getElementById('post-btn').addEventListener('click', () => {
@@ -614,7 +616,8 @@
     
     // Dummy Global Feed Simulation: Adds random dummy posts periodically
     function addDummyPost() {
-      const dummyNames = ["TechGuru", "RandomUser", "Innovator", "CodeMaster", "DigitalNomad", "CyberSamurai", "FutureVisionary"];
+      // Updated dummy names without "CyberSamurai"
+      const dummyNames = ["TechGuru", "RandomUser", "Innovator", "CodeMaster", "DigitalNomad", "FutureVisionary"];
       const dummyMessages = [
         "Loving the vibe here!",
         "This community is awesome!",
@@ -654,4 +657,3 @@
   </script>
 </body>
 </html>
-
