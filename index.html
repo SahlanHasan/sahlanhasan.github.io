@@ -242,19 +242,27 @@
     .create-post input[type="file"] {
       display: none;
     }
-    .file-label {
+    /* Redesigned File Label & Post Button */
+    .file-label, 
+    #post-btn {
       display: inline-block;
       padding: 10px 20px;
-      background: var(--accent-color);
+      background: linear-gradient(135deg, var(--accent-color), #00e67a);
       color: var(--bg-color);
-      border-radius: 5px;
+      border-radius: 50px;
       cursor: pointer;
-      transition: opacity 0.3s;
+      transition: opacity 0.3s, transform 0.3s;
       margin-bottom: 10px;
+      border: none;
+      text-decoration: none;
+      font-weight: 600;
     }
-    .file-label:hover {
-      opacity: 0.8;
+    .file-label:hover, 
+    #post-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
     }
+    /* Redesigned Post Icon UI for Action Buttons */
     .post {
       background: var(--card-bg);
       padding: 20px;
@@ -294,17 +302,27 @@
       margin-top: 10px;
     }
     .post-actions button {
-      background: var(--accent-color);
+      background: linear-gradient(135deg, var(--accent-color), #00e67a);
       color: var(--bg-color);
       border: none;
       padding: 8px 12px;
-      border-radius: 5px;
+      border-radius: 50px;
       cursor: pointer;
       font-size: 0.9rem;
-      transition: background 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: background 0.3s, transform 0.2s;
     }
     .post-actions button:hover {
-      opacity: 0.85;
+      background: #00d676;
+      transform: translateY(-2px);
+    }
+    .post-actions button i {
+      transition: transform 0.2s ease;
+    }
+    .post-actions button:hover i {
+      transform: scale(1.2);
     }
     /* Footer */
     footer {
@@ -462,9 +480,6 @@
         <button id="post-btn">Post</button>
       </div>
       <div id="posts"></div>
-      <p style="font-size:0.9rem; color:#aaa; text-align:center; margin-top:10px;">
-        Note: This is a simulated community feed. For a truly global feed, a backend server is required.
-      </p>
     </section>
     
     <!-- Contact Section -->
@@ -613,35 +628,6 @@
         file ? reader.readAsDataURL(file) : reader.onload();
       }
     });
-    
-    // Dummy Global Feed Simulation: Adds random dummy posts periodically
-    function addDummyPost() {
-      // Updated dummy names without "CyberSamurai"
-      const dummyNames = ["TechGuru", "RandomUser", "Innovator", "CodeMaster", "DigitalNomad", "FutureVisionary"];
-      const dummyMessages = [
-        "Loving the vibe here!",
-        "This community is awesome!",
-        "Great work, everyone!",
-        "Keep innovating!",
-        "Incredible projects!",
-        "Tech is life!",
-        "Inspired by the creativity!"
-      ];
-      let randomName = dummyNames[Math.floor(Math.random() * dummyNames.length)];
-      let randomMessage = dummyMessages[Math.floor(Math.random() * dummyMessages.length)];
-      const newPost = {
-        id: Date.now(),
-        username: randomName,
-        text: randomMessage,
-        image: null,
-        likes: 0,
-        timestamp: new Date().toLocaleString()
-      };
-      posts.push(newPost);
-      localStorage.setItem('posts', JSON.stringify(posts));
-      loadPosts();
-    }
-    setInterval(addDummyPost, 30000); // every 30 seconds
     
     // Back to Top Button
     const backToTopBtn = document.getElementById('back-to-top');
