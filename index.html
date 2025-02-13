@@ -1,383 +1,407 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sahlan Hasan - Portfolio & Community</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --bg-color: #1a1a1a;
-            --text-color: #ffffff;
-            --card-bg: #2a2a2a;
-            --accent-color: #00ff88;
-            --border-color: #444;
-        }
-
-        /* Light Theme */
-        .light-theme {
-            --bg-color: #ffffff;
-            --text-color: #1a1a1a;
-            --card-bg: #f0f0f0;
-            --accent-color: #00cc66;
-            --border-color: #ddd;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            transition: background 0.3s, color 0.3s;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        /* Profile Section */
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 4px solid var(--accent-color);
-            margin: 20px auto;
-            display: block;
-            transition: transform 0.3s ease;
-        }
-
-        .profile-img:hover {
-            transform: scale(1.1);
-        }
-
-        h1 {
-            font-size: 3rem;
-            text-align: center;
-            color: var(--accent-color);
-            margin-bottom: 10px;
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Sections */
-        .section {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 40px 0;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            animation: slideUp 0.5s ease-in-out;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        h2 {
-            color: var(--accent-color);
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-
-        /* Community Feed Styles */
-        .create-post {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-
-        #post-text {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            background: var(--bg-color);
-            color: var(--text-color);
-            resize: none;
-            transition: border-color 0.3s;
-        }
-
-        #post-text:focus {
-            border-color: var(--accent-color);
-            outline: none;
-        }
-
-        .post {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            position: relative;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        .post img {
-            max-width: 100%;
-            border-radius: 5px;
-            margin-top: 10px;
-            transition: transform 0.3s;
-        }
-
-        .post img:hover {
-            transform: scale(1.02);
-        }
-
-        .post-actions {
-            display: flex;
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .like-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--accent-color);
-            padding: 5px 10px;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-
-        .like-btn:hover {
-            background: rgba(0, 255, 136, 0.1);
-        }
-
-        .delete-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #ff4444;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: opacity 0.3s;
-        }
-
-        .delete-btn:hover {
-            opacity: 0.8;
-        }
-
-        button {
-            background: var(--accent-color);
-            color: var(--bg-color);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: opacity 0.3s;
-        }
-
-        button:hover {
-            opacity: 0.8;
-        }
-
-        /* Theme Toggle */
-        #theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 1000;
-            transition: transform 0.3s;
-        }
-
-        #theme-toggle:hover {
-            transform: rotate(180deg);
-        }
-        
-        /* Back to Top Button */
-        #back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--accent-color);
-            color: var(--bg-color);
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            display: none;
-            z-index: 1000;
-            transition: opacity 0.3s;
-        }
-
-        /* Responsive Design */
-        @media screen and (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 2.5rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sahlan Hasan - Portfolio & Community</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    /* CSS Variables and Base Styles */
+    :root {
+      --bg-color: #1a1a1a;
+      --text-color: #ffffff;
+      --card-bg: #2a2a2a;
+      --accent-color: #00ff88;
+      --border-color: #444;
+      --header-bg: rgba(0, 0, 0, 0.8);
+    }
+    .light-theme {
+      --bg-color: #ffffff;
+      --text-color: #1a1a1a;
+      --card-bg: #f0f0f0;
+      --accent-color: #00cc66;
+      --border-color: #ddd;
+      --header-bg: rgba(255, 255, 255, 0.8);
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      transition: background 0.3s, color 0.3s;
+    }
+    /* Fixed Navigation Bar */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--header-bg);
+      padding: 10px 20px;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--accent-color);
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover {
+      color: var(--accent-color);
+    }
+    /* Mobile Navigation */
+    .menu-toggle {
+      display: none;
+      font-size: 1.5rem;
+      color: var(--text-color);
+      cursor: pointer;
+    }
+    @media screen and (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        background: var(--header-bg);
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        display: none;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      nav ul.show {
+        display: flex;
+      }
+      .menu-toggle {
+        display: block;
+      }
+    }
+    /* Hero Section */
+    #hero {
+      height: 100vh;
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://i.postimg.cc/PxFf0b2B/tech-background.jpg') no-repeat center center/cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+    }
+    #hero h1 {
+      font-size: 3.5rem;
+      color: var(--accent-color);
+      margin-bottom: 20px;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+    #hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin-bottom: 30px;
+    }
+    #hero .btn {
+      padding: 10px 20px;
+      background: var(--accent-color);
+      color: var(--bg-color);
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    #hero .btn:hover {
+      opacity: 0.8;
+    }
+    /* Main Container */
+    .container {
+      max-width: 1000px;
+      margin: 100px auto 40px auto; /* Top margin adjusted for fixed header */
+      padding: 20px;
+    }
+    /* Section Styles */
+    .section {
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 10px;
+      margin: 40px 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      animation: slideUp 0.5s ease-in-out;
+    }
+    .section h2 {
+      color: var(--accent-color);
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+    }
+    /* Profile Image in About Section */
+    .profile-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 4px solid var(--accent-color);
+      margin: -75px auto 20px auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .profile-img:hover {
+      transform: scale(1.1);
+    }
+    /* List Styling */
+    .section ul {
+      list-style: none;
+      padding: 0;
+    }
+    .section ul li {
+      margin-bottom: 10px;
+    }
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: var(--card-bg);
+      border-top: 1px solid var(--border-color);
+      margin-top: 40px;
+    }
+    /* Theme Toggle Button */
+    #theme-toggle {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1000;
+      transition: transform 0.3s;
+    }
+    #theme-toggle:hover {
+      transform: rotate(180deg);
+    }
+    /* Back to Top Button */
+    #back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--accent-color);
+      color: var(--bg-color);
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: none;
+      z-index: 1000;
+      transition: opacity 0.3s;
+    }
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    /* Responsive adjustments */
+    @media screen and (max-width: 480px) {
+      #hero h1 {
+        font-size: 2.8rem;
+      }
+      #hero p {
+        font-size: 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <button id="theme-toggle">🌓</button>
+  <!-- Navigation -->
+  <header>
+    <nav>
+      <div class="logo">Sahlan Hasan</div>
+      <div class="menu-toggle" id="mobile-menu"><i class="fa fa-bars"></i></div>
+      <ul id="navbar">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#community">Community</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <!-- Hero Section -->
+  <section id="hero">
+    <h1>Welcome to My World</h1>
+    <p>I’m Sahlan Hasan - CEO &amp; Founder of NeuraFlow AI Pro. A tech enthusiast, web developer, and innovator shaping the future with creative solutions.</p>
+    <a href="#about" class="btn">Learn More</a>
+  </section>
+  
+  <!-- Theme Toggle -->
+  <button id="theme-toggle">🌓</button>
+  
+  <!-- Main Content Container -->
+  <div class="container">
+    <!-- About Section -->
+    <section class="section" id="about">
+      <img src="https://i.postimg.cc/Gh43Lv1z/PYUQSPU2-HRDB7-PFG7-BEEZ232-VE.avif" alt="Sahlan Hasan" class="profile-img">
+      <h2>About Me</h2>
+      <p>
+        Hi, I'm Sahlan Hasan, CEO &amp; Founder of NeuraFlow AI Pro. With a deep passion for technology and innovation, I've built a career bridging the gap between entrepreneurial vision and cutting-edge web development. My journey is defined by creativity, dedication, and the drive to create solutions that push boundaries—from modern web applications to pioneering AI-driven projects.
+      </p>
+    </section>
     
-    <div class="container">
-        <!-- Profile Section -->
-        <img src="https://i.postimg.cc/Gh43Lv1z/PYUQSPU2-HRDB7-PFG7-BEEZ232-VE.avif" 
-             alt="Sahlan Hasan" 
-             class="profile-img">
-        <h1>Sahlan Hasan</h1>
-        <div class="section">
-            <h2>About Me</h2>
-            <p>
-                Hi, I'm Sahlan Hasan, CEO & Founder of NeuraFlow AI Pro. I am a passionate tech entrepreneur and web developer with extensive experience in modern web development, artificial intelligence, and innovative tech solutions. I am dedicated to pushing the boundaries of technology and crafting solutions that make a significant impact. My journey in tech is fueled by creativity, commitment, and a relentless drive to transform ideas into reality.
-            </p>
-        </div>
-
-        <div class="section">
-            <h2>Skills</h2>
-            <ul>
-                <li>Tech Entrepreneurship</li>
-                <li>Full Stack Development</li>
-                <li>AI & Machine Learning</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>Projects</h2>
-            <div style="margin-top: 20px;">
-                <h3>NeuraFlow AI Pro</h3>
-                <p>CEO & Founder - <a href="https://neuraflowai.github.io/NeuraFlowPRO.COM/" target="_blank" style="color: var(--accent-color);">Visit NeuraFlow AI Pro</a></p>
-            </div>
-        </div>
-
-        <!-- Community Feed Section -->
-        <div class="section">
-            <h2>Community Feed</h2>
-            <div class="create-post">
-                <textarea id="post-text" placeholder="Share your thoughts..."></textarea>
-                <input type="file" id="image-upload" accept="image/*">
-                <button id="post-btn">Post</button>
-            </div>
-            <div id="posts"></div>
-        </div>
-
-        <!-- Contact Section -->
-        <div class="section">
-            <h2>Contact</h2>
-            <p>📧 <a href="mailto:sahlanhasan08@gmail.com" style="color: var(--accent-color);">
-                sahlanhasan08@gmail.com
-            </a></p>
-            <div style="display: flex; gap: 20px; justify-content: center; margin-top: 20px;">
-                <a href="https://neuraflowai.github.io/NeuraFlowPRO.COM/" 
-                   style="color: var(--accent-color);" 
-                   target="_blank">
-                    NeuraFlow AI Pro Website
-                </a>
-            </div>
-        </div>
-    </div>
+    <!-- Skills Section -->
+    <section class="section" id="skills">
+      <h2>Skills</h2>
+      <ul>
+        <li>Tech Entrepreneurship</li>
+        <li>Full Stack Development</li>
+        <li>AI &amp; Machine Learning</li>
+        <li>Innovative Problem Solving</li>
+        <li>Responsive UI/UX Design</li>
+      </ul>
+    </section>
     
-    <button id="back-to-top">Back to Top</button>
-
-    <script>
-        // Theme Toggle
-        const themeToggle = document.getElementById('theme-toggle');
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('light-theme');
+    <!-- Projects Section -->
+    <section class="section" id="projects">
+      <h2>Projects</h2>
+      <div style="margin-top: 20px;">
+        <h3>NeuraFlow AI Pro</h3>
+        <p>CEO &amp; Founder - <a href="https://neuraflowai.github.io/NeuraFlowPRO.COM/" target="_blank" style="color: var(--accent-color);">Visit NeuraFlow AI Pro</a></p>
+      </div>
+    </section>
+    
+    <!-- Community Feed Section -->
+    <section class="section" id="community">
+      <h2>Community Feed</h2>
+      <div class="create-post">
+        <textarea id="post-text" placeholder="Share your thoughts..."></textarea>
+        <input type="file" id="image-upload" accept="image/*">
+        <button id="post-btn">Post</button>
+      </div>
+      <div id="posts"></div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+      <h2>Contact</h2>
+      <p>📧 <a href="mailto:sahlanhasan08@gmail.com" style="color: var(--accent-color);">
+        sahlanhasan08@gmail.com
+      </a></p>
+      <p>Explore more: <a href="https://neuraflowai.github.io/NeuraFlowPRO.COM/" target="_blank" style="color: var(--accent-color);">NeuraFlow AI Pro Website</a></p>
+    </section>
+  </div>
+  
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Sahlan Hasan. All rights reserved.</p>
+  </footer>
+  
+  <!-- Back to Top Button -->
+  <button id="back-to-top">Back to Top</button>
+  
+  <script>
+    // Mobile Menu Toggle
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navbar = document.getElementById('navbar');
+    mobileMenu.addEventListener('click', () => {
+      navbar.classList.toggle('show');
+    });
+    
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light-theme');
+    });
+    
+    // Community Feed System
+    let posts = JSON.parse(localStorage.getItem('posts')) || [];
+    function loadPosts() {
+      const postsContainer = document.getElementById('posts');
+      postsContainer.innerHTML = '';
+      posts.forEach(post => {
+        const postDiv = document.createElement('div');
+        postDiv.className = 'post';
+        postDiv.innerHTML = `
+          <strong>Anonymous User:</strong> ${post.text}
+          ${post.image ? `<img src="${post.image}" alt="Post image">` : ''}
+          <div class="post-actions">
+            <button class="like-btn"><i class="fa fa-thumbs-up"></i> ${post.likes}</button>
+          </div>
+          <button class="delete-btn">Delete</button>
+        `;
+        postDiv.querySelector('.like-btn').addEventListener('click', () => {
+          post.likes++;
+          localStorage.setItem('posts', JSON.stringify(posts));
+          loadPosts();
         });
-
-        // Community Feed System
-        let posts = JSON.parse(localStorage.getItem('posts')) || [];
-
-        function loadPosts() {
-            const postsContainer = document.getElementById('posts');
-            postsContainer.innerHTML = '';
-            
-            posts.forEach(post => {
-                const postDiv = document.createElement('div');
-                postDiv.className = 'post';
-                postDiv.innerHTML = `
-                    <strong>Anonymous User:</strong> ${post.text}
-                    ${post.image ? `<img src="${post.image}" alt="Post image">` : ''}
-                    <div class="post-actions">
-                        <button class="like-btn">
-                            <i class="fa fa-thumbs-up"></i> ${post.likes}
-                        </button>
-                    </div>
-                    <button class="delete-btn">Delete</button>
-                `;
-
-                postDiv.querySelector('.like-btn').addEventListener('click', () => {
-                    post.likes++;
-                    localStorage.setItem('posts', JSON.stringify(posts));
-                    loadPosts();
-                });
-
-                postDiv.querySelector('.delete-btn').addEventListener('click', () => {
-                    posts = posts.filter(p => p.id !== post.id);
-                    localStorage.setItem('posts', JSON.stringify(posts));
-                    loadPosts();
-                });
-
-                postsContainer.appendChild(postDiv);
-            });
-        }
-
-        document.getElementById('post-btn').addEventListener('click', () => {
-            const text = document.getElementById('post-text').value;
-            const imageInput = document.getElementById('image-upload');
-            const file = imageInput.files[0];
-
-            if (text.trim() || file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const newPost = {
-                        id: Date.now(),
-                        text: text,
-                        image: file ? e.target.result : null,
-                        likes: 0
-                    };
-
-                    posts.push(newPost);
-                    localStorage.setItem('posts', JSON.stringify(posts));
-                    loadPosts();
-                    document.getElementById('post-text').value = '';
-                    imageInput.value = '';
-                };
-
-                file ? reader.readAsDataURL(file) : reader.onload();
-            }
+        postDiv.querySelector('.delete-btn').addEventListener('click', () => {
+          posts = posts.filter(p => p.id !== post.id);
+          localStorage.setItem('posts', JSON.stringify(posts));
+          loadPosts();
         });
-
-        // Back to Top Button
-        const backToTopBtn = document.getElementById('back-to-top');
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTopBtn.style.display = 'block';
-            } else {
-                backToTopBtn.style.display = 'none';
-            }
-        });
-
-        // Initial load
-        loadPosts();
-    </script>
+        postsContainer.appendChild(postDiv);
+      });
+    }
+    document.getElementById('post-btn').addEventListener('click', () => {
+      const text = document.getElementById('post-text').value;
+      const imageInput = document.getElementById('image-upload');
+      const file = imageInput.files[0];
+      if (text.trim() || file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const newPost = {
+            id: Date.now(),
+            text: text,
+            image: file ? e.target.result : null,
+            likes: 0
+          };
+          posts.push(newPost);
+          localStorage.setItem('posts', JSON.stringify(posts));
+          loadPosts();
+          document.getElementById('post-text').value = '';
+          imageInput.value = '';
+        };
+        file ? reader.readAsDataURL(file) : reader.onload();
+      }
+    });
+    
+    // Back to Top Button
+    const backToTopBtn = document.getElementById('back-to-top');
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.style.display = 'block';
+      } else {
+        backToTopBtn.style.display = 'none';
+      }
+    });
+    
+    // Initial load of posts
+    loadPosts();
+  </script>
 </body>
 </html>
