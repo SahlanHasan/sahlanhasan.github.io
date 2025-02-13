@@ -219,7 +219,7 @@
     .testimonial.active {
       display: block;
     }
-    /* Community Feed Specific Styles */
+    /* Redesigned Community Feed */
     .create-post {
       background: var(--card-bg);
       padding: 20px;
@@ -231,12 +231,13 @@
     .create-post input[type="text"],
     .create-post textarea {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin: 10px 0;
       border: 1px solid var(--border-color);
-      border-radius: 5px;
+      border-radius: 8px;
       background: var(--bg-color);
       color: var(--text-color);
+      font-size: 1rem;
     }
     .create-post input[type="file"] {
       display: none;
@@ -259,40 +260,51 @@
       padding: 20px;
       border-radius: 10px;
       margin-bottom: 20px;
-      position: relative;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+      transition: transform 0.2s;
+    }
+    .post:hover {
+      transform: scale(1.02);
+    }
+    .post header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .post header strong {
+      font-size: 1.1rem;
+    }
+    .post header small {
+      font-size: 0.85rem;
+      color: #aaa;
+    }
+    .post p {
+      margin: 10px 0;
+      font-size: 1rem;
     }
     .post img {
       max-width: 100%;
       border-radius: 5px;
-      margin-top: 10px;
-      transition: transform 0.3s;
-    }
-    .post img:hover {
-      transform: scale(1.02);
+      margin: 10px 0;
     }
     .post-actions {
       display: flex;
       gap: 10px;
-      margin-top: 15px;
+      margin-top: 10px;
     }
     .post-actions button {
       background: var(--accent-color);
       color: var(--bg-color);
       border: none;
-      padding: 5px 10px;
+      padding: 8px 12px;
       border-radius: 5px;
       cursor: pointer;
+      font-size: 0.9rem;
       transition: background 0.3s;
     }
     .post-actions button:hover {
-      opacity: 0.8;
-    }
-    .post small {
-      display: block;
-      margin-top: 10px;
-      color: #aaa;
-      font-size: 0.85rem;
+      opacity: 0.85;
     }
     /* Footer */
     footer {
@@ -443,15 +455,16 @@
       <h2>Community Feed</h2>
       <div class="create-post">
         <input type="text" id="username-input" placeholder="Your Name (optional)">
-        <textarea id="post-text" placeholder="What's on your mind? Share your thoughts..."></textarea>
+        <textarea id="post-text" placeholder="Share your thoughts..."></textarea>
         <br>
-        <label for="image-upload" class="file-label">
-          <i class="fa fa-upload"></i> Choose File
-        </label>
+        <label for="image-upload" class="file-label"><i class="fa fa-upload"></i> Choose File</label>
         <input type="file" id="image-upload" accept="image/*">
         <button id="post-btn">Post</button>
       </div>
       <div id="posts"></div>
+      <p style="font-size:0.9rem; color:#aaa; text-align:center; margin-top:10px;">
+        Note: This is a simulated community feed. For a truly global feed where posts are shared among all users, a backend server is required.
+      </p>
     </section>
     
     <!-- Contact Section -->
@@ -518,9 +531,12 @@
         const postDiv = document.createElement('div');
         postDiv.className = 'post';
         postDiv.innerHTML = `
-          <strong>${post.username || "Anonymous"}:</strong> <span class="post-text">${post.text}</span>
+          <header>
+            <strong>${post.username || "Anonymous"}</strong>
+            <small>${post.timestamp}</small>
+          </header>
+          <p class="post-text">${post.text}</p>
           ${post.image ? `<img src="${post.image}" alt="Post image">` : ''}
-          <small>${post.timestamp}</small>
           <div class="post-actions">
             <button class="like-btn"><i class="fa fa-thumbs-up"></i> ${post.likes}</button>
             <button class="edit-btn"><i class="fa fa-edit"></i> Edit</button>
@@ -638,3 +654,4 @@
   </script>
 </body>
 </html>
+
