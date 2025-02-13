@@ -102,8 +102,7 @@
     /* Hero Section */
     #hero {
       height: 100vh;
-      /* Removed the broken background image and replaced it with a gradient */
-      background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
+      background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(0,0,0,0.7));
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -138,7 +137,7 @@
     /* Main Container */
     .container {
       max-width: 1000px;
-      margin: 100px auto 40px auto; /* Top margin adjusted for fixed header */
+      margin: 100px auto 40px auto;
       padding: 20px;
     }
     /* Section Styles */
@@ -175,6 +174,80 @@
     }
     .section ul li {
       margin-bottom: 10px;
+    }
+    /* Community Feed Specific Styles */
+    .create-post {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      border: 2px dashed var(--accent-color);
+      text-align: center;
+    }
+    .create-post textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      background: var(--bg-color);
+      color: var(--text-color);
+      resize: none;
+    }
+    .create-post input[type="file"] {
+      display: none;
+    }
+    .file-label {
+      display: inline-block;
+      padding: 10px 20px;
+      background: var(--accent-color);
+      color: var(--bg-color);
+      border-radius: 5px;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+    .file-label:hover {
+      opacity: 0.8;
+    }
+    .post {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      position: relative;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .post img {
+      max-width: 100%;
+      border-radius: 5px;
+      margin-top: 10px;
+      transition: transform 0.3s;
+    }
+    .post img:hover {
+      transform: scale(1.02);
+    }
+    .post-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .post-actions button {
+      background: var(--accent-color);
+      color: var(--bg-color);
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .post-actions button:hover {
+      opacity: 0.8;
+    }
+    .post small {
+      display: block;
+      margin-top: 10px;
+      color: #aaa;
+      font-size: 0.85rem;
     }
     /* Footer */
     footer {
@@ -297,7 +370,11 @@
     <section class="section" id="community">
       <h2>Community Feed</h2>
       <div class="create-post">
-        <textarea id="post-text" placeholder="Share your thoughts..."></textarea>
+        <textarea id="post-text" placeholder="What's on your mind? Share your thoughts..."></textarea>
+        <br>
+        <label for="image-upload" class="file-label">
+          <i class="fa fa-upload"></i> Choose File
+        </label>
         <input type="file" id="image-upload" accept="image/*">
         <button id="post-btn">Post</button>
       </div>
@@ -338,33 +415,65 @@
     
     // Community Feed System
     let posts = JSON.parse(localStorage.getItem('posts')) || [];
+    
     function loadPosts() {
       const postsContainer = document.getElementById('posts');
       postsContainer.innerHTML = '';
-      posts.forEach(post => {
+      posts.forEach((post, index) => {
         const postDiv = document.createElement('div');
         postDiv.className = 'post';
         postDiv.innerHTML = `
-          <strong>Anonymous User:</strong> ${post.text}
+          <strong>Anonymous User:</strong> <span class="post-text">${post.text}</span>
           ${post.image ? `<img src="${post.image}" alt="Post image">` : ''}
+          <small>${post.timestamp}</small>
           <div class="post-actions">
             <button class="like-btn"><i class="fa fa-thumbs-up"></i> ${post.likes}</button>
+            <button class="edit-btn"><i class="fa fa-edit"></i> Edit</button>
+            <button class="share-btn"><i class="fa fa-share"></i> Share</button>
+            <button class="delete-btn"><i class="fa fa-trash"></i> Delete</button>
           </div>
-          <button class="delete-btn">Delete</button>
         `;
+        
+        // Like Button
         postDiv.querySelector('.like-btn').addEventListener('click', () => {
           post.likes++;
           localStorage.setItem('posts', JSON.stringify(posts));
           loadPosts();
         });
+        
+        // Delete Button
         postDiv.querySelector('.delete-btn').addEventListener('click', () => {
-          posts = posts.filter(p => p.id !== post.id);
+          posts = posts.filter((_, i) => i !== index);
           localStorage.setItem('posts', JSON.stringify(posts));
           loadPosts();
         });
+        
+        // Edit Button
+        postDiv.querySelector('.edit-btn').addEventListener('click', () => {
+          const newText = prompt('Edit your post:', post.text);
+          if (newText !== null && newText.trim() !== '') {
+            post.text = newText;
+            post.timestamp = new Date().toLocaleString(); // update timestamp
+            localStorage.setItem('posts', JSON.stringify(posts));
+            loadPosts();
+          }
+        });
+        
+        // Share Button - Copies post text and timestamp to clipboard
+        postDiv.querySelector('.share-btn').addEventListener('click', async () => {
+          const shareText = `Post: ${post.text}\nPosted on: ${post.timestamp}`;
+          try {
+            await navigator.clipboard.writeText(shareText);
+            alert('Post copied to clipboard!');
+          } catch (err) {
+            alert('Failed to copy text: ' + err);
+          }
+        });
+        
         postsContainer.appendChild(postDiv);
       });
     }
+    
     document.getElementById('post-btn').addEventListener('click', () => {
       const text = document.getElementById('post-text').value;
       const imageInput = document.getElementById('image-upload');
@@ -376,7 +485,8 @@
             id: Date.now(),
             text: text,
             image: file ? e.target.result : null,
-            likes: 0
+            likes: 0,
+            timestamp: new Date().toLocaleString()
           };
           posts.push(newPost);
           localStorage.setItem('posts', JSON.stringify(posts));
@@ -394,11 +504,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        backToTopBtn.style.display = 'block';
-      } else {
-        backToTopBtn.style.display = 'none';
-      }
+      backToTopBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
     });
     
     // Initial load of posts
